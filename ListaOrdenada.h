@@ -39,9 +39,9 @@ void inserir(Lista *L, Objeto x) {
     PtrNoLista Novo;
     Novo = (PtrNoLista) malloc(sizeof(NoLista));
     Novo->elemento = x;
-    printf("\t Inserindo elemento: %d\n", x.chave);
+    printf("\t Inserindo elemento: %d", x.chave);
     if (estaVazia(L) || x.chave < L->primeiro->elemento.chave) {
-        Novo->proximo = L->primeiro; //Novo->proximo == NULL 
+        Novo->proximo = L->primeiro; //Novo->proximo == NULL
         L->primeiro = Novo;
         L->Contador++;
     } else {
@@ -57,7 +57,7 @@ void inserir(Lista *L, Objeto x) {
 
 void imprimirLista(Lista *L) {
     PtrNoLista ptr;
-    printf("\t | ");
+    printf("\n\t| ");
     for (ptr = L->primeiro; ptr != NULL; ptr = ptr->proximo) {
         printf("%d ", ptr->elemento.chave);
     }
@@ -73,17 +73,21 @@ void destruirLista(Lista *L) {
 }
 
 bool pesquisar(Lista *L, int key) {
-    if (estaVazia(L)) {
-        return false;
+    if (estaVazia(L)){
+        return (false);
     }
-    PtrNoLista Aux = L->primeiro;
-    while ((Aux != NULL) && (key > Aux->elemento.chave)) {
-        Aux = Aux->proximo;
+
+    PtrNoLista aux =  L->primeiro;
+    while((aux->proximo != NULL) && (key > aux->proximo->elemento.chave)){
+        aux = aux->proximo;
+
     }
-    if ((Aux == NULL) || (Aux->elemento.chave > key)) { //nao existe elemento
-        return false;
+    if((aux == NULL) || (key < aux->proximo->elemento.chave)){
+        return (false);
+    } else {
+        return (true);
     }
-    return true;
+
 }
 
 int TamanhoLista(Lista *L) {
@@ -91,25 +95,85 @@ int TamanhoLista(Lista *L) {
     return L->Contador;
 
 }
-
-void removeElemento(Lista *L, int chave, Objeto *obj) {
-
-
-}
-
 void removePrimeiro(Lista *L, Objeto *obj) {
-
+    if(estaVazia(L) == 0){
+        PtrNoLista aux = L->primeiro;
+        *obj = aux->elemento;
+        L->primeiro = L->primeiro->proximo;
+        free(aux);
+        L->Contador--;
+        printf("Elemento: %d removido\n", (*obj).chave);
+    } else {
+        printf("\n\tERRO\n\n\tLISTA VAZIA\n\n");
+    }
 
 }
 
 void removeUltimo(Lista *L, Objeto *obj) {
+    if(estaVazia(L) == 0){
+        if(TamanhoLista(L) == 1){
+            removePrimeiro(L, obj);
+        } else {
+            PtrNoLista  aux = L->primeiro;
+
+            for(aux = L->primeiro ; aux->proximo->proximo != NULL; aux = aux->proximo);
+            PtrNoLista remove = aux->proximo;
+            *obj = remove->elemento;
+            aux->proximo = NULL;
+            free(remove);
+            printf("Elemento: %d removido\n", (*obj).chave);
+            L->Contador--;
+        }
+    }else {
+        printf("\n\tERRO\n\n\tLISTA VAZIA\n\n");
+    }
 
 
 }
 
+bool removeElemento(Lista *L, int chave, Objeto *obj) {
+    if(estaVazia(L) || (chave < L->primeiro->elemento.chave)){
+            printf("\n\tA PORRA TA VAZIA CARALHO\n\n");
+            return false;
+    }
+    if(chave == L->primeiro->elemento.chave){
+        printf("Primeiro Elemento removido\n\n");
+        removePrimeiro(L, obj);
+        return printf("Elemento Removido: %d\n", chave);
+    } else {
+        /*
+        PtrNoLista aux = L->primeiro;
+        while((aux->proximo = NULL) && (chave > aux->proximo->elemento.chave)){
+            aux = aux->proximo;
+            printf("pup\n");
+
+        }
+        */
+        PtrNoLista aux =  L->primeiro;
+        while((aux->proximo != NULL) && (chave > aux->proximo->elemento.chave)){
+            aux = aux->proximo;
+
+        }
+        if((aux->proximo == NULL) || (chave < aux->proximo->elemento.chave)){
+            printf("\n\tNÃO EXISTE SA PORRA NA LISTA CARALHO\n\n");
+            return false;
+        } else {
+            PtrNoLista remove = aux->proximo;
+            aux->proximo = aux->proximo->proximo;
+            free(remove);
+            L->Contador--;
+            printf("\n");
+            return printf("Elemento Removido: %d\n", chave);
+
+        }
+    }
+}
+
+
+
 Objeto primeiro(Lista *L) {
 
-    return L->primeiro->elemento;
+    return (L->primeiro->elemento);
 
 }
 
@@ -118,12 +182,28 @@ Objeto ultimo(Lista *L) {
     for (ptr = L->primeiro; ptr != NULL; ptr = ptr->proximo) {
 
         if (ptr->proximo == NULL) {
-            L->primeiro->elemento.chave = ptr->elemento.chave;
-            return L->primeiro->elemento;
+            return ptr->elemento;
         }
     }
 
 }
 
+Lista* separa(Lista*lista, int n){
+    //percorrer ate achar chave == n
+    //lista
+    //inciiaa lista
+    // primeiro = aux->proximo
+    //aux->proximo = NULL;
+    //retorna L2
+}
+Lista* uniao(Lista*lista1, Lista*lista2){
+    //cria L3
+    //percorre L1 , inserção
+    //percorre L2, inserção
+    //  pesquisa o elemento para ver se tem igual
+    //  bool n = pesq()
+    //  if(n == false)
+    //      insere
+}
 
 #endif //LISTAORDENADAS_LISTAORDENADA_H
