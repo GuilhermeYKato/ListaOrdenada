@@ -42,11 +42,21 @@ int main() {
     printf("Tamanho: %d\n", TamanhoLista(&Listona));
     printf("Primeiro: %d\n", primeiro(&Listona).chave);
     printf("Ultimo: %d\n", ultimo(&Listona).chave);
-    int x = 50;
-    if (pesquisar(&Listona, x)) {
-        printf("Achou\n");
-    } else {
-        printf("Não tem, SADBOY\n");
+
+    int x = 49;
+    printf("Elemento %d está na lista?\n1 - para Verdadeira e 0 - para Falso:\n\t ##### %d #####\n\n",x ,pesquisar(&Listona, x));
+    removePrimeiro(&Listona, &obj);
+    imprimirLista(&Listona);
+    for(int i = 0; i < 5; i++){
+        removeUltimo(&Listona, &obj);
+
     }
+    int N = 5;
+
+    printf("Elemento %d está na lista?\n1 - para Verdadeira e 0 - para Falso:\n\t ##### |%d| #####\n\n",N ,pesquisar(&Listona, N));
+    imprimirLista(&Listona);
+    printf("1 - para Verdadeira e 0 - para Falso:\n\t ##### %d #####\n",removeElemento(&Listona, N, &obj));
+    imprimirLista(&Listona);
+
     return 0;
 }
