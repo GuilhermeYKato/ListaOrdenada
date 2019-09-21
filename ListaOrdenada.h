@@ -189,21 +189,27 @@ Objeto ultimo(Lista *L) {
 }
 
 Lista* separa(Lista*lista, int n){
-    //percorrer ate achar chave == n
-    //lista
-    //inciiaa lista
-    // primeiro = aux->proximo
-    //aux->proximo = NULL;
-    //retorna L2
+    PtrNoLista aux;
+    for(aux = lista->primeiro; aux != NULL; aux = aux->proximo);//percorrer ate achar chave == n
+    if(aux->elemento.chave == n){
+        Lista L2;    //lista
+        iniciaLista(&L2);    //inciiaa lista
+        lista->primeiro = aux->proximo;// primeiro = aux->proximo
+        aux->proximo = NULL;//aux->proximo = NULL;
+        return (&L2);//retorna L2
+    }
 }
 Lista* uniao(Lista*lista1, Lista*lista2){
-    //cria L3
-    //percorre L1 , inserção
-    //percorre L2, inserção
-    //  pesquisa o elemento para ver se tem igual
-    //  bool n = pesq()
-    //  if(n == false)
-    //      insere
+    Lista L3;//cria L3
+    PtrNoLista aux;
+    for(aux = lista1->primeiro; aux != NULL; aux = aux->proximo){
+        inserir(&L3,aux->elemento);
+    }//percorre L1 , inserção
+    for(aux = lista2->primeiro; aux != NULL; aux = aux->proximo){
+        bool n = pesquisar(lista2,n);//  pesquisa o elemento para ver se tem igual
+        if(n == false){
+            inserir(&L3, aux->elemento);
+        }
 }
 
 #endif //LISTAORDENADAS_LISTAORDENADA_H
